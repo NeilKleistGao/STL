@@ -1,4 +1,5 @@
 exception RuntimeError of string;;
+exception TypeError of Lang.st * Lang.st;;
 
 let rec replace e nme v = match e with
   | Lang.Lit _ -> e
@@ -31,3 +32,11 @@ let rec eval e = match e with
       if (lhs' = rhs') then (eval csq) else (eval alt)
   | _ -> raise (RuntimeError "not a number.")
 ;;
+
+let typing e =
+  let rec run e = match e with
+    | Lang.Lit _ -> Lang.Int
+    | _ -> raise (RuntimeError "not implemented yet.") (* TODO *)
+    in let res = run e in (match res with
+      | Lang.Int -> ()
+      | _ -> raise (TypeError (Lang.Int, res)));;

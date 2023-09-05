@@ -9,3 +9,10 @@ type expr =
   | App of expr * expr (* e e *)
   | TST of expr * expr * expr (* if e then e else e *)
 ;; 
+
+type st =
+  | Int
+  | Bool
+  | Fun of (st * st)
+  | TV of int
+;;
