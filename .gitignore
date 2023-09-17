@@ -1,31 +1,29 @@
-*.annot
-*.cmo
-*.cma
-*.cmi
-*.a
-*.o
-*.cmx
-*.cmxs
-*.cmxa
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-# ocamlbuild working directory
-_build/
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-# ocamlbuild targets
-*.byte
-*.native
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-# oasis generated files
-setup.data
-setup.log
+### VS Code ###
+.vscode/
 
-# Merlin configuring file for Vim and Emacs
-.merlin
-
-# Dune generated files
-*.install
-
-# Local OPAM switch
-_opam/
-
-main
+### Mac OS ###
+.DS_Store
