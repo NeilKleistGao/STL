@@ -1,5 +1,6 @@
 package stl
 
+import java.lang.Exception
 import kotlin.collections.HashMap
 
 typealias TypeEq = Pair<Type, Type>
@@ -41,6 +42,17 @@ class Typer() {
     return find(res)
   }
 
+  fun print(type: Type): String {
+    val tp = find(type)
+    return when(tp) {
+      is IntType -> "Int"
+      is BoolType -> "Bool"
+      is NothingType -> "Nothing"
+      is FunType -> "(${print(tp.arg)}) -> ${print(tp.res)}"
+      is TypeVar -> "v${tp.id}"
+    }
+  }
+
   private fun merge(x: Type, y: Type) {
     val lhs = if (x !is TypeVar && y is TypeVar) y else x
     val rhs = if (lhs == x) y else x
@@ -70,16 +82,11 @@ class Typer() {
     }
   }
 
-  private val sequence = sequence {
-    var id = 0
-    while (true) {
-      yield(id)
-      ++id
-    }
-  }
+  private var id = 0
 
   private fun refresh(): TypeVar {
-    val res = TypeVar(sequence.first())
+    val res = TypeVar(id)
+    ++id
     parents[res] = res
     return res
   }

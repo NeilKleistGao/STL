@@ -14,23 +14,13 @@ fun print(expr: Expr): String =
     else -> throw Exception("invalid case")
   }
 
-fun print(type: Type): String =
-  when(type) {
-    is IntType -> "Int"
-    is BoolType -> "Bool"
-    is NothingType -> "Nothing"
-    is FunType -> "${print(type.arg)} -> ${print(type.res)}"
-    is TypeVar -> "v${type.id}"
-    else -> throw Exception("invalid case")
-  }
-
 fun test(prgm: Expr): Unit {
   val typer = Typer()
   val type = typer.type(prgm)
 
   if (typer.isSafe()) {
     val res = eval(prgm)
-    println("res: ${print(type)}")
+    println("res: ${typer.print(type)}")
     println("res = ${print(res)}")
   }
 
@@ -40,6 +30,8 @@ fun test(prgm: Expr): Unit {
 fun main(args: Array<String>) {
   test(Add(Lit(1), Lit(2)))
   test(Fun("a", Var("a")))
+  test(Fun("a", Add(Var("a"), Lit(1))))
   test(App(Fun("x", Add(Var("x"), Lit(2))), Lit(4)))
   test(Tst(Eqn(Lit(2), Add(Lit(1), Lit(1))), Lit(0), Lit(1)))
+  test(Fun("f", Fun("x", App(Var("f"), Var("x")))))
 }
