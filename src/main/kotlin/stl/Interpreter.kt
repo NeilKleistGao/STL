@@ -2,8 +2,8 @@ package stl
 
 import java.lang.Exception
 
-fun eval(expr: Expr): Expr {
-  return when(expr) {
+fun eval(expr: Expr): Expr =
+  when(expr) {
     is Add -> {
       val lhs = eval(expr.lhs)
       val rhs = eval(expr.rhs)
@@ -18,7 +18,7 @@ fun eval(expr: Expr): Expr {
       val f = eval(expr.f)
       val a = eval(expr.a)
       if (f is Fun) {
-        f.body // TODO:
+        eval(f.body.subst(f.arg, a))
       }
       else {
         throw Exception("not a function")
@@ -51,6 +51,6 @@ fun eval(expr: Expr): Expr {
 
       if (cond) eval(expr.csq) else eval(expr.alt)
     }
+    is Var -> throw Exception("variable ${expr.name} is unbound")
     else -> expr
   }
-}
